@@ -40,7 +40,7 @@ str(merged.df)
 colnames(merged.df) <- c("tBodyAcc.mean.X", "tBodyAcc.mean.Y", "tBodyAcc.mean.Z", "tBodyAcc.std.X", "tBodyAcc.std.Y", "tBodyAcc.std.Z", "Subject", "Activity")
 str(merged.df)
 
-write.csv(x = merged.df, file = "measurements-tidy.csv")
+write.csv(x = merged.df, file = "measurements-tidy.csv", row.names = F)
 
 # 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
@@ -57,4 +57,4 @@ average.df <-
 
 head(average.df) # display results
 
-write.csv(x = average.df, file = "averages-tidy.csv")
+write.csv(x = average.df, file = "averages-tidy.csv", row.names = F)
