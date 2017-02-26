@@ -7,26 +7,25 @@ train_x <- scan(file = "train\\X_train.txt", what = numeric())
 train_x <- matrix(train_x, ncol = 561, byrow = TRUE)
 test_x <- scan(file = "test\\X_test.txt", what = numeric())
 test_x <- matrix(test_x, ncol = 561, byrow = TRUE)
-measurements <- rbind(train_x, test_x)
+measurements <- rbind(train_x, test_x)  # merge the two matrices row-wise
 
 # load activities
 train_y <- scan(file = "train\\Y_train.txt", what = numeric())
 test_y <- scan(file = "test\\Y_test.txt", what = numeric())
-activities <- c(train_y, test_y)  #train_y and test_y are vectors
+activities <- c(train_y, test_y)  #train_y and test_y are both vectors
 
 # load subjects
 train_subject <- scan(file = "train\\subject_train.txt", what = numeric())
 test_subject <- scan(file = "test\\subject_test.txt", what = numeric())
-subjects <- c(train_subject, test_subject)  #train_y and test_y are vectors
+subjects <- c(train_subject, test_subject)  #train_subject and test_subject are both vectors
 
-total <- cbind(measurements, subjects, activities)
+total <- cbind(measurements, subjects, activities)  # merge the three tables column-wise
 total.df <- as.data.frame(total)
 
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement.
 
-# mean and std are the first 6 columns, column 562 is the activity description
+# mean and std are the first 6 columns, also pick subjects and activity columns
 new.df <- total.df %>% select(1:6, subjects, activities)
-
 
 # 3. Uses descriptive activity names to name the activities in the data set
 
@@ -40,6 +39,8 @@ str(merged.df)
 
 colnames(merged.df) <- c("tBodyAcc.mean.X", "tBodyAcc.mean.Y", "tBodyAcc.mean.Z", "tBodyAcc.std.X", "tBodyAcc.std.Y", "tBodyAcc.std.Z", "Subject", "Activity")
 str(merged.df)
+
+write.csv(x = merged.df, file = "measurements-tidy.csv")
 
 # 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
@@ -55,3 +56,5 @@ average.df <-
     mean(tBodyAcc.std.Z))
 
 head(average.df) # display results
+
+write.csv(x = average.df, file = "averages-tidy.csv")
